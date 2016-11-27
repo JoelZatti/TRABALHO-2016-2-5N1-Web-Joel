@@ -15,7 +15,7 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class ControleProfessor implements Serializable {
 
-    private ProfessorDAO<Professor> dao;
+    private ProfessorDAO dao;
     private Professor objeto;
 
     public ControleProfessor() {
@@ -31,14 +31,8 @@ public class ControleProfessor implements Serializable {
         return "formulario";
     }
 
-    public String salvar(){
-        boolean persistiu;
-        if (objeto.getTitulacao() == null){
-            persistiu = dao.persist(objeto);
-        } else {
-            persistiu = dao.merge(objeto);
-        }                
-        if (persistiu){
+    public String salvar() {
+        if (dao.persist(objeto)) {
             UtilMensagens.mensagemInformacao(dao.getMensagem());
             return "listar";
         } else {
@@ -46,24 +40,32 @@ public class ControleProfessor implements Serializable {
             return "formulario";
         }
     }
-    
-    public String cancelar(){
-        objeto = null;
-        return "listar";
+
+    public String editar(Integer id) {
+        objeto = (Professor) dao.localizar(id);
+        return "formulario";
     }
-    
-    public String editar(Integer titulacao){
-        objeto = dao.localizar(titulacao);
-        return "formulario";        
-    }
-    
-    public void remover(Integer titulacao){
-        objeto = dao.localizar(titulacao);
-        if (dao.remove(objeto)){
+
+    public void remover(Integer id) {
+        objeto = (Professor) dao.localizar(id);
+        if (dao.remove(objeto)) {
             UtilMensagens.mensagemInformacao(dao.getMensagem());
         } else {
             UtilMensagens.mensagemErro(dao.getMensagem());
         }
+    }
+
+    public String cancelar() {
+        objeto = null;
+        return "listar";
+    }
+
+    public ProfessorDAO getDao() {
+        return dao;
+    }
+
+    public void setDao(ProfessorDAO dao) {
+        this.dao = dao;
     }
 
     public Professor getObjeto() {
@@ -72,14 +74,6 @@ public class ControleProfessor implements Serializable {
 
     public void setObjeto(Professor objeto) {
         this.objeto = objeto;
-    }
-
-    public ProfessorDAO<Professor> getDao() {
-        return dao;
-    }
-
-    public void setDao(ProfessorDAO<Professor> dao) {
-        this.dao = dao;
     }
 
 }

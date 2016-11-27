@@ -5,14 +5,13 @@ import java.io.Serializable;
 
 /**
  *
- * @author Joel Zatti
- * joelzatti@gmail.com
+ * @author Joel Zatti joelzatti@gmail.com
  */
 public class ProfessorDAO<T> extends DAOGenerico<Professor> implements Serializable {
 
     public ProfessorDAO() {
         super();
         super.setClassePersistente(Professor.class);
-          super.setOrdem("titulacao");
+        super.setOrdem("titulacao");
     }
 }

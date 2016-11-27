@@ -27,11 +27,14 @@
                                              ajax="false"/>
                         </div>  
                     </f:facet>  
-                    <p:outputLabel value="Titulacao"/>
+                    <p:outputLabel value="Titulacao" for="txtTitulacao"/>
                     <p:inputText value="#{controleProfessor.objeto.titulacao}"
-                                 size="5" readonly="true"/>
+                                 id="txtTitulacao"
+                                 size="20" maxlength="20"
+                                 placeholder="Obrigatório"/>
                     <p:outputLabel value="TopicosInteresse" for="txtTopicosInteresse"/>
-                    <p:inputText value="#{controleProfessor.objeto.topicosInteresse}" id="txtTopicosInteresse"
+                    <p:inputText value="#{controleProfessor.objeto.topicosInteresse}" 
+                                 id="txtTopicosInteresse"
                                  size="100" maxlength="100"
                                  placeholder="Obrigatório"/>
                 </p:panelGrid>

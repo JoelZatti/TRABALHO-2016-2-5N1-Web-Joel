@@ -52,14 +52,14 @@
                         <p:outputLabel value="#{obj.titulacao}"/>                  
                     </p:column>                 
                     <p:column headerText="Tópicos de Interesse">
-                        <p:outputLabel value="#{obj.topicosinteresse}"/>
+                        <p:outputLabel value="#{obj.topicosInteresse}"/>
                     </p:column> 
                     <p:column headerText="Ações">
                         <div align="center">
-                            <p:commandButton action="#{controleProfessor.editar(obj.titulacao)}"
+                            <p:commandButton action="#{controleProfessor.editar(obj.id)}"
                                              icon="ui-icon-pencil" title="Editar"
                                              ajax="false"/>
-                            <p:commandButton action="#{controleProfessor.remover(obj.titulacao)}"
+                            <p:commandButton action="#{controleProfessor.remover(obj.id)}"
                                              icon="ui-icon-trash" title="Remover"
                                              update="@form"
                                              onclick="if (!confirm('Confirma a remoção'))
