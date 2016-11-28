@@ -7,59 +7,65 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <ui:composition template="/templates/template.xhtml">
-        <ui:define name="titulo">Professor</ui:define>
+        <ui:define name="titulo">Instituição</ui:define>
         <ui:define name="conteudo">
-            <h1>Listagem de Professor</h1>
+            <h1>Listagem de Instituição</h1>
             <h:form>
                 <p:growl/>
                 <p:commandButton value="novo" icon="ui-icon-plus"
-                                 action="#{controleProfessor.novo()}"
+                                 action="#{controleInstituicao.novo()}"
                                  ajax="false"/>
                 <div align="center">
                     <p:panelGrid columns="11">
                         <p:outputLabel value="Ordem: "/>
-                        <p:selectOneMenu value="#{controleProfessor.dao.ordem}">
-                            <f:selectItem itemLabel="Titulação" itemValue="titulacao"/>
-                            <f:selectItem itemLabel="Tópicos de Interesse" itemValue="topicosInteresse"/>
+                        <p:selectOneMenu value="#{controleInstituicao.dao.ordem}">
+                            <f:selectItem itemLabel="ID" itemValue="id"/>
+                            <f:selectItem itemLabel="Nome" itemValue="nome"/>
+                            <!--<f:selectItem itemLabel="Data" itemValue="data"/>-->
                             <p:ajax update="listagem"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Filtro:"/>
-                        <p:inputText value="#{controleProfessor.dao.filtro}" size="15">
-                                    <p:ajax update="listagem" event="keyup"/>
+                        <p:inputText value="#{controleInstituicao.dao.filtro}" size="15">
+                            <p:ajax update="listagem" event="keyup"/>
                         </p:inputText>
                         <p:commandButton value="Filtrar" update="listagem"/>
                         <p:outputLabel value="Máximo Objetos"/>
-                        <p:inputNumber value="#{controleProfessor.dao.maximoObjetos}"
+                        <p:inputNumber value="#{controleInstituicao.dao.maximoObjetos}"
                                        decimalPlaces="0" decimalSeparator="" 
                                        thousandSeparator="" size="3"/>
-                        <p:commandButton actionListener="#{controleProfessor.dao.primeiro()}"
+                        <p:commandButton actionListener="#{controleInstituicao.dao.primeiro()}"
                                          icon="ui-icon-seek-first" update="listagem" title="Primeiro"/>
-                        <p:commandButton actionListener="#{controleProfessor.dao.anterior()}"
+                        <p:commandButton actionListener="#{controleInstituicao.dao.anterior()}"
                                          icon="ui-icon-seek-prev" update="listagem" title="Anterior"/>
-                        <p:commandButton actionListener="#{controleProfessor.dao.proximo()}"
+                        <p:commandButton actionListener="#{controleInstituicao.dao.proximo()}"
                                          icon="ui-icon-seek-next" update="listagem" title="Próximo"/>
-                        <p:commandButton actionListener="#{controleProfessor.dao.ultimo()}"
+                        <p:commandButton actionListener="#{controleInstituicao.dao.ultimo()}"
                                          icon="ui-icon-seek-end" update="listagem" title="Último"/>
                     </p:panelGrid>
                 </div>                
-                <p:dataTable value="#{controleProfessor.dao.listaObjetos}" 
+                <p:dataTable value="#{controleInstituicao.dao.listaObjetos}" 
                              var="obj" id="listagem"
                              emptyMessage="Nenhum resultado encontrado">   
                     <f:facet name="footer">
-                        <p:outputLabel value="#{controleProfessor.dao.mensagemNavegacao}"/>
+                        <p:outputLabel value="#{controleInstituicao.dao.mensagemNavegacao}"/>
                     </f:facet>
-                    <p:column headerText="Titulação">
-                        <p:outputLabel value="#{obj.titulacao}"/>                  
+                    <p:column headerText="ID">
+                        <h:outputLabel value="#{obj.id}"/>                  
                     </p:column>                 
-                    <p:column headerText="Tópicos de Interesse">
-                        <p:outputLabel value="#{obj.topicosInteresse}"/>
-                    </p:column> 
+                    <p:column headerText="Nome">
+                        <p:outputLabel value="#{obj.nome}"/>
+                    </p:column>  
+                    <p:column headerText="Ano de Fundação">
+                        <p:outputLabel value="#{obj.anoFundacao}">
+                            <f:converter converterId="converterCalendar"/>
+                        </p:outputLabel>
+                    </p:column>  
                     <p:column headerText="Ações">
                         <div align="center">
-                            <p:commandButton action="#{controleProfessor.editar(obj.id)}"
+                            <p:commandButton action="#{controleInstituicao.editar(obj.id)}"
                                              icon="ui-icon-pencil" title="Editar"
                                              ajax="false"/>
-                            <p:commandButton action="#{controleProfessor.remover(obj.id)}"
+                            <p:commandButton action="#{controleInstituicao.remover(obj.id)}"
                                              icon="ui-icon-trash" title="Remover"
                                              update="@form"
                                              onclick="if (!confirm('Confirma a remoção'))
