@@ -57,7 +57,7 @@ public class ControleCurso implements Serializable {
 
     public void salvar() {
         boolean persistiu;
-        if (objeto.getId() == null) {
+        if (objeto.getId() == null){
             persistiu = dao.persist(objeto);
         } else {
             persistiu = dao.merge(objeto);

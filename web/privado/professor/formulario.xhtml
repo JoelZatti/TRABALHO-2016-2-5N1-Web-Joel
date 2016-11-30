@@ -5,7 +5,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    
+
     <ui:composition template="/templates/template.xhtml">
         <ui:define name="titulo">Professor</ui:define>
         <ui:define name="conteudo">
@@ -35,6 +35,32 @@
                     <p:inputText value="#{controleProfessor.objeto.topicosInteresse}" 
                                  size="100" maxlength="100"
                                  placeholder="Obrigatório"/>
+                    <p:outputLabel value="ID"/>
+                    <p:inputText value="#{controleProfessor.objeto.id}"
+                                 size="5" readonly="true"/>
+                    <p:outputLabel value="Nome"/>
+                    <p:inputText value="#{controleProfessor.objeto.nome}" 
+                                 size="100" maxlength="100"
+                                 placeholder="Obrigatório"/>
+                    <p:outputLabel value="Email"/>
+                    <p:inputText value="#{controleProfessor.objeto.email}"
+                                 size="100" maxlength="100"
+                                 placeholder="Obrigatório"/>                    
+                    <p:outputLabel value="Especialidade"/>
+                    <p:selectOneMenu value="#{controleProfessor.objeto.especialidade}"
+                                     id="selectEspecialidade">
+                        <f:converter converterId="converterEspecialidade"/>
+                        <f:selectItem itemLabel="Selecione um registro"
+                                      noSelectionOption="true"/>
+                        <f:selectItems value="#{controleProfessor.especialidadeDAO.listaTodos}"
+                                       var="p" itemLabel="#{p.nome}"/>
+                    </p:selectOneMenu>                     
+                    <p:outputLabel value="Nascimento" for="txtNascimento"/>
+                    <p:calendar id="txtNascimento" value="#{controleProfessor.objeto.nascimento}"
+                                pattern="dd/MM/yyyy" mask="true" locale="pt_BR"
+                                navigator="true">
+                        <f:converter converterId="converterCalendar"/>
+                    </p:calendar>
                 </p:panelGrid>
             </h:form>
         </ui:define>

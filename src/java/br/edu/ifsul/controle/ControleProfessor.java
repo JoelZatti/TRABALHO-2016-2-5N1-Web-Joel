@@ -1,5 +1,6 @@
 package br.edu.ifsul.controle;
 
+import br.edu.ifsul.dao.EspecialidadeDAO;
 import br.edu.ifsul.dao.ProfessorDAO;
 import br.edu.ifsul.modelo.Professor;
 import br.edu.ifsul.util.UtilMensagens;
@@ -17,9 +18,11 @@ public class ControleProfessor implements Serializable {
 
     private ProfessorDAO dao;
     private Professor objeto;
+    private EspecialidadeDAO<EspecialidadeDAO> EspecialidadeDAO;
 
     public ControleProfessor() {
         dao = new ProfessorDAO();
+        EspecialidadeDAO = new EspecialidadeDAO<>();
     }
 
     public String listar() {
@@ -31,8 +34,14 @@ public class ControleProfessor implements Serializable {
         return "formulario";
     }
 
-    public String salvar() {
-        if (dao.persist(objeto)) {
+    public String salvar(){
+        boolean persistiu;
+        if (objeto.getId() == null){
+            persistiu = dao.persist(objeto);
+        } else {
+            persistiu = dao.merge(objeto);
+        }                
+        if (persistiu){
             UtilMensagens.mensagemInformacao(dao.getMensagem());
             return "listar";
         } else {
@@ -74,6 +83,14 @@ public class ControleProfessor implements Serializable {
 
     public void setObjeto(Professor objeto) {
         this.objeto = objeto;
+    }
+
+    public EspecialidadeDAO<EspecialidadeDAO> getEspecialidadeDAO() {
+        return EspecialidadeDAO;
+    }
+
+    public void setEspecialidadeDAO(EspecialidadeDAO<EspecialidadeDAO> EspecialidadeDAO) {
+        this.EspecialidadeDAO = EspecialidadeDAO;
     }
 
 }
