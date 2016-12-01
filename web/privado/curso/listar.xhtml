@@ -86,7 +86,7 @@
             </h:form>            
         </ui:define>
         <ui:define name="dialogos">
-            <p:dialog widgetVar="dlg" header="Edição" modal="true" resizable="false" width="900" height="550">
+            <p:dialog widgetVar="dlg" header="Edição" modal="true" resizable="false" width="900" height="600">
                 <h:form id="formEdicao">
                     <p:growl id="growl"/>
                     <p:tabView id="tab">
@@ -117,9 +117,27 @@
                                                  placeholder="Obrigatório"/>
                                     <p:outputLabel value="Descrição" for="txtDescricao"/>
                                     <p:editor id="txtDescricao" widgetVar="editorWidget" 
-                                              value="#{controleCurso.objeto.descricao}" width="600"/>                                   
-                                    
+                                              value="#{controleCurso.objeto.descricao}" width="600"/>   
+                                    <p:outputLabel value="Instituição"/>
+                                    <p:selectOneMenu value="#{controleCurso.objeto.instituicao}"
+                                                     id="selectInstituicao">
+                                        <f:converter converterId="converterInstituicao"/>
+                                        <f:selectItem itemLabel="Selecione um registro"
+                                                      noSelectionOption="true"/>
+                                        <f:selectItems value="#{controleCurso.instituicaoDAO.listaTodos}"
+                                                       var="p" itemLabel="#{p.nome}"/>
+                                    </p:selectOneMenu>
+
                                     <!--estava aqui o SelectOneRadio -->
+
+                                    <h3 style="margin-top:0">Ativo</h3>
+                                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                                        <p:outputLabel for="Ativo"/>
+                                        <p:selectOneRadio id="Ativo" value="#{controleCurso.objeto.ativo}">
+                                            <f:selectItem itemLabel="Sim" itemValue="true" />
+                                            <f:selectItem itemLabel="Não" itemValue="false" />
+                                        </p:selectOneRadio>
+                                    </h:panelGrid>
 
                                     <p:outputLabel value="inicioAtividades" for="txtinicioAtividades"/>
                                     <p:calendar id="txtinicioAtividades" value="#{controleCurso.objeto.inicioAtividades}"

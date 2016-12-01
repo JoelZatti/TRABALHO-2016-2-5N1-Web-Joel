@@ -2,8 +2,10 @@ package br.edu.ifsul.controle;
 
 import br.edu.ifsul.dao.CursoDAO;
 import br.edu.ifsul.dao.DisciplinaDAO;
+import br.edu.ifsul.dao.InstituicaoDAO;
 import br.edu.ifsul.modelo.Curso;
 import br.edu.ifsul.modelo.Disciplina;
+import br.edu.ifsul.modelo.Instituicao;
 import br.edu.ifsul.util.UtilMensagens;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
@@ -22,6 +24,7 @@ public class ControleCurso implements Serializable {
     private DisciplinaDAO<Disciplina> DisciplinaDAO;
     private Disciplina disciplina;
     private Boolean novaDisciplina;
+    private InstituicaoDAO<Instituicao> instituicaoDAO;
     
     public void novaDisciplina(){
         disciplina = new Disciplina();
@@ -45,6 +48,7 @@ public class ControleCurso implements Serializable {
     public ControleCurso() {
         dao = new CursoDAO<>();
         DisciplinaDAO = new DisciplinaDAO<>();
+        instituicaoDAO = new InstituicaoDAO<>();
     }
 
     public String listar() {
@@ -112,6 +116,14 @@ public class ControleCurso implements Serializable {
 
     public void setNovaDisciplina(Boolean novaDisciplina) {
         this.novaDisciplina = novaDisciplina;
+    }
+
+    public InstituicaoDAO<Instituicao> getInstituicaoDAO() {
+        return instituicaoDAO;
+    }
+
+    public void setInstituicaoDAO(InstituicaoDAO<Instituicao> instituicaoDAO) {
+        this.instituicaoDAO = instituicaoDAO;
     }
 
 }

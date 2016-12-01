@@ -1,6 +1,7 @@
 package br.edu.ifsul.dao;
 
 import br.edu.ifsul.jpa.EntityManagerUtil;
+import br.edu.ifsul.util.Util;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -101,7 +102,8 @@ public class DAOGenerico<T> implements Serializable {
                 em.getTransaction().begin();
             }
             em.getTransaction().rollback();
-            mensagem = "Erro ao persistir objeto" + e.getMessage();
+            mensagem = "Erro ao persistir objeto" + Util.getMensagemErro(e);
+            e.printStackTrace();
             return false;
         }
     }
@@ -118,7 +120,8 @@ public class DAOGenerico<T> implements Serializable {
                 em.getTransaction().begin();
             }
             em.getTransaction().rollback();
-            mensagem = "Erro ao persistir objeto" + e.getMessage();
+            mensagem = "Erro ao persistir objeto" + Util.getMensagemErro(e);
+            e.printStackTrace();
             return false;
         }
     }
