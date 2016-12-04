@@ -23,6 +23,14 @@ public class ControleCurso implements Serializable {
     private Curso objeto;
     private DisciplinaDAO<Disciplina> DisciplinaDAO;
     private Disciplina disciplina;
+
+    public Disciplina getDisciplina() {
+        return disciplina;
+    }
+
+    public void setDisciplina(Disciplina disciplina) {
+        this.disciplina = disciplina;
+    }
     private Boolean novaDisciplina;
     private InstituicaoDAO<Instituicao> instituicaoDAO;
     
