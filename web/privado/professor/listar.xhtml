@@ -28,10 +28,9 @@
                                     <p:ajax update="listagem" event="keyup"/>
                         </p:inputText>
                         <p:commandButton value="Filtrar" update="listagem"/>
-                        <p:outputLabel value="Máximo Objetos"/>
-                        <p:inputNumber value="#{controleProfessor.dao.maximoObjetos}"
-                                       decimalPlaces="0" decimalSeparator="" 
-                                       thousandSeparator="" size="3"/>
+                        <h:outputLabel for="minMax" value="Máximo Objetos:"/>
+                        <p:spinner id="minMax" value="#{controleProfessor.dao.maximoObjetos}" 
+                                   min="0" max="100" size="1"/>
                         <p:commandButton actionListener="#{controleProfessor.dao.primeiro()}"
                                          icon="ui-icon-seek-first" update="listagem" title="Primeiro"/>
                         <p:commandButton actionListener="#{controleProfessor.dao.anterior()}"

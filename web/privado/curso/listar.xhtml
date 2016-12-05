@@ -22,6 +22,9 @@
                             <f:selectItem itemLabel="Nome" itemValue="nome"/>
                             <f:selectItem itemLabel="Sigla" itemValue="Sigla"/>
                             <f:selectItem itemLabel="Descrição" itemValue="descricao"/>
+                            <!--Adicionado para uma melhor visualização-->
+                            <f:selectItem itemLabel="Instituição" itemValue="instituicao.nome"/>
+                            <!--Termina aqui-->
                             <p:ajax update="listagem"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Filtro:"/>
@@ -29,10 +32,10 @@
                             <p:ajax update="listagem" event="keyup"/>
                         </p:inputText>
                         <p:commandButton value="Filtrar" update="listagem"/>
-                        <p:outputLabel value="Máximo Objetos"/>
-                        <p:inputNumber value="#{controleCurso.dao.maximoObjetos}"
-                                       decimalPlaces="0" decimalSeparator=""
-                                       thousandSeparator="" size="3"/>
+                        
+                        <h:outputLabel for="minMax" value="Máximo Objetos:"/>
+                        <p:spinner id="minMax" value="#{controleCurso.dao.maximoObjetos}" 
+                                   min="0" max="100" size="1"/>
                         <p:commandButton actionListener="#{controleCurso.dao.primeiro()}"
                                          icon="ui-icon-seek-first" update="listagem" title="Primeiro"/>
                         <p:commandButton actionListener="#{controleCurso.dao.anterior()}"
@@ -52,23 +55,33 @@
                     <p:column headerText="ID">
                         <p:outputLabel value="#{obj.id}"/>
                     </p:column>
+
                     <p:column headerText="Nome">
                         <p:outputLabel value="#{obj.nome}"/>
                     </p:column>
+
                     <p:column headerText="Sigla">
                         <p:outputLabel value="#{obj.sigla}"/>
                     </p:column>
+
                     <p:column headerText="Descrição">
                         <p:outputLabel value="#{obj.descricao}"/>
                     </p:column>
+
                     <p:column headerText="Ativo">
                         <p:outputLabel value="#{obj.ativo}"/>
                     </p:column>
+
                     <p:column headerText="Inicio das Atividades">
                         <p:outputLabel value="#{obj.inicioAtividades}">
                             <f:converter converterId="converterCalendar"/>
                         </p:outputLabel>    
                     </p:column>
+                    <!--Adicionado para uma melhor visualização-->
+                    <p:column headerText="Instituição">
+                        <p:outputLabel value="#{obj.instituicao.nome}"/>
+                    </p:column>
+                    <!--termina aqui-->
                     <p:column headerText="Ações">
                         <div align="center">
                             <p:commandButton actionListener="#{controleCurso.editar(obj.id)}"
@@ -115,9 +128,11 @@
                                     <p:inputText id="txtSigla" value="#{controleCurso.objeto.sigla}"
                                                  size="10" maxlength="10"
                                                  placeholder="Obrigatório"/>
+
                                     <p:outputLabel value="Descrição" for="txtDescricao"/>
                                     <p:editor id="txtDescricao" widgetVar="editorWidget" 
                                               value="#{controleCurso.objeto.descricao}" width="600"/>   
+
                                     <p:outputLabel value="Instituição"/>
                                     <p:selectOneMenu value="#{controleCurso.objeto.instituicao}"
                                                      id="selectInstituicao">
@@ -127,8 +142,6 @@
                                         <f:selectItems value="#{controleCurso.instituicaoDAO.listaTodos}"
                                                        var="p" itemLabel="#{p.nome}"/>
                                     </p:selectOneMenu>
-
-                                    <!--SelectOneRadio -->
 
                                     <h3 style="margin-top:0">Ativo</h3>
                                     <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">                                        
@@ -144,13 +157,13 @@
                                 </p:panelGrid>
                             </div>
                         </p:tab>
-                        <p:tab title="Disciplina">
+                        <p:tab title="Disciplinas">
                             <p:dataTable value="#{controleCurso.objeto.disciplina}"
                                          var="item" rowIndexVar="idx" id="listaDisciplinas"
                                          emptyMessage="Nenhum registro encontrado">
                                 <f:facet name="header">
                                     <p:commandButton value="Nova Disciplina"
-                                                     actionListener="#{controleCurso.novaDisciplina()}"
+                                                     actionListener="#{controleCurso.salvarDisciplina()}"
                                                      update=":formDisciplinas" icon="ui-icon-plus"
                                                      id="btnNovaDisciplina" process="btnNovaDisciplina"
                                                      oncomplete="PF('dlgDisciplina').show();"/>
@@ -158,15 +171,19 @@
                                 <p:column headerText="Nome">
                                     <p:outputLabel value="#{item.nome}"/>
                                 </p:column>
+
                                 <p:column headerText="Descrição">
                                     <p:outputLabel value="#{item.descricao}"/>
                                 </p:column>
+
                                 <p:column headerText="Carga Horária">
                                     <p:outputLabel value="#{item.cargaHoraria}"/>
                                 </p:column>
+
                                 <p:column headerText="Conhecimentos Mínimos">
                                     <p:outputLabel value="#{item.conhecimentosMinimos}"/>
-                                </p:column>          
+                                </p:column>  
+
                                 <p:column headerText="Ações">
                                     <div align="center">
                                         <p:commandButton id="btnAlterarDisciplina"
@@ -180,9 +197,7 @@
                                                          actionListener="#{controleCurso.removerDisciplina(index)}"
                                                          process="btnRemoverDisciplina"
                                                          update="listaDisciplinas :formEdicao:growl 
-                                                         :formEdicao"
-                                                         onclick="if (!confirm('Confirma a remoção'))
-                                                         return false"/>
+                                                         :formEdicao"/>
                                     </div> 
                                 </p:column>         
                             </p:dataTable>
@@ -208,7 +223,6 @@
                                                      process="@form"
                                                      oncomplete="if(!args.validationFailed){PF('dlgDisciplina').hide();}">
                                     </p:commandButton>
-
                                 </div>  
                             </f:facet>
                             <p:outputLabel value="ID"/>
@@ -219,24 +233,24 @@
                             <p:inputText id="txtNome" value="#{controleCurso.disciplina.nome}"
                                          size="50" maxlength="50"
                                          placeholder="Obrigatório"/>
+
                             <p:outputLabel value="Descrição"/>
-                            <p:inputTextarea value="#{controleCurso.disciplina.descricao}" rows="6" cols="100" />                            
+                            <p:inputTextarea value="#{controleCurso.disciplina.descricao}" rows="3" cols="100" />  
+
                             <p:outputLabel value="Carga Horária"/>
                             <p:inputNumber id="txtCargaHoraria"
                                            value="#{controleCurso.disciplina.cargaHoraria}"
                                            size="6" maxlength="6"
                                            decimalPlaces="2" decimalSeparator=":"
                                            thousandSeparator=""/>
+
                             <p:outputLabel value="Conhecimentos Mínimos"/>
-                            <p:inputTextarea value="#{controleCurso.disciplina.conhecimentosMinimos}" rows="6" cols="100" />   
+                            <p:inputTextarea value="#{controleCurso.disciplina.conhecimentosMinimos}" rows="3" cols="100" />   
                         </p:panelGrid>
                     </p:growl>
                 </h:form>
             </p:dialog>
-
-            <!--até aqui-->            
-
-
+            <!--até aqui-->  
         </ui:define>
     </ui:composition>
 </html>
