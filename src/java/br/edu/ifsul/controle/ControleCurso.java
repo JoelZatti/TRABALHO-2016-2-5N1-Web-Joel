@@ -28,15 +28,12 @@ public class ControleCurso implements Serializable {
         return disciplina;
     }
 
-    public void setDisciplina(Disciplina disciplina) {
-        this.disciplina = disciplina;
-    }
     private Boolean novaDisciplina;
     private InstituicaoDAO<Instituicao> instituicaoDAO;
     
     public void novaDisciplina(){
         disciplina = new Disciplina();
-        setNovaDisciplina((Boolean) true);
+        novaDisciplina = true;
     }
     public void alterarDisciplina(int index){
         disciplina = objeto.getDisciplina().get(index);
@@ -47,7 +44,7 @@ public class ControleCurso implements Serializable {
         UtilMensagens.mensagemInformacao("Disciplina removida com sucesso!");
     }
     public void salvarDisciplina(){
-        if(getNovaDisciplina()){
+        if(novaDisciplina){
             objeto.adicionarDisciplina(disciplina);       
         }
          UtilMensagens.mensagemInformacao("Operação executada com sucesso!");

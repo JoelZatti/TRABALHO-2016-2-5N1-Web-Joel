@@ -163,7 +163,7 @@
                                          emptyMessage="Nenhum registro encontrado">
                                 <f:facet name="header">
                                     <p:commandButton value="Nova Disciplina"
-                                                     actionListener="#{controleCurso.salvarDisciplina()}"
+                                                     actionListener="#{controleCurso.novaDisciplina()}"
                                                      update=":formDisciplinas" icon="ui-icon-plus"
                                                      id="btnNovaDisciplina" process="btnNovaDisciplina"
                                                      oncomplete="PF('dlgDisciplina').show();"/>
@@ -196,8 +196,7 @@
                                                          icon="ui-icon-trash"
                                                          actionListener="#{controleCurso.removerDisciplina(index)}"
                                                          process="btnRemoverDisciplina"
-                                                         update="listaDisciplinas :formEdicao:growl 
-                                                         :formEdicao"/>
+                                                         update="listaDisciplinas :formEdicao:growl"/>
                                     </div> 
                                 </p:column>         
                             </p:dataTable>
